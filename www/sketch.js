@@ -106,10 +106,11 @@ function PuzzelPiece(img, drawing, audio, coordX, coordY) {
     piece2.audio.pause();
     piece3.audio.pause();
     piece4.audio.pause();
+
     this.audio.play();
   }
 
-  this.display = function() {
+  this.display = function () {
     image(this.displayImage, this.position.x, this.position.y, this.width, this.height);
   }
 
