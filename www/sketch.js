@@ -70,7 +70,7 @@ function PuzzelPiece(img, drawing, audio, coordX, coordY) {
 
   this.acceleration = createVector(0, 0);
   this.velocity = createVector(random(-1, 1), random(-1, 1));
-  this.position = createVector(random(0, windowWidth), random(0, windowHeight));
+  this.position = createVector(random(100, windowWidth-this.width), random(100, windowHeight-this.height));
 
 
   this.run = function () {
