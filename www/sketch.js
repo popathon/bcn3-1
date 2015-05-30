@@ -102,14 +102,23 @@ function PuzzelPiece(img, drawing, audio, coordX, coordY) {
     
     this.isHome = true;
 
-    piece1.audio.pause();
-    piece2.audio.pause();
-    piece3.audio.pause();
-    piece4.audio.pause();
-    this.audio.play();
+    // piece1.audio.pause();
+    // piece2.audio.pause();
+    // piece3.audio.pause();
+    // piece4.audio.pause();
+
+    // this.audio.play();
   }
 
-  this.display = function() {
+  this.toggleAudio = function () {
+    if (this.audio.isPlaying()) {
+      this.audio.pause();
+    } else {
+      this.audio.play()
+    }; 
+  }
+
+  this.display = function () {
     image(this.displayImage, this.position.x, this.position.y, this.width, this.height);
   }
 
@@ -121,6 +130,7 @@ function PuzzelPiece(img, drawing, audio, coordX, coordY) {
 function mouseClicked () {
   if (piece1.hovered) {
     piece1.moveHome();
+    toggleAudio();
   };
   if (piece2.hovered) {
     piece2.moveHome();
