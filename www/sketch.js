@@ -10,19 +10,30 @@ var imgWidth;
 var imgHeight;
 
 function preload() {
-  img1 = loadImage("img/foto-1.jpg");
+  // img1 = loadImage("img/foto-1.jpg");
+  img1 = loadImage("img/FOTO_A1_sized.jpg");
+  img2 = loadImage("img/FOTO_A2_sized.jpg");
+  img3 = loadImage("img/FOTO_B1_sized.jpg");
+  img4 = loadImage("img/FOTO_B2_sized.jpg");
+  
   audio1 = loadSound("audio/audio-1.mp3");
+  audio2 = loadSound("audio/audio-1.mp3");
+  audio3 = loadSound("audio/audio-1.mp3");
+  audio4 = loadSound("audio/audio-1.mp3");
 }
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
 
   // set image attributes
-  imgWidth = 347;
-  imgHeight = 208;
+  imgWidth = 0.5 * windowWidth;
+  imgHeight = 0.5 * windowHeight;
   
   // Create objects
   piece1 = new PuzzelPiece(img1, audio1, 0, 0);
+  piece2 = new PuzzelPiece(img2, audio2, 1, 0);
+  piece3 = new PuzzelPiece(img3, audio3, 0, 1);
+  piece4 = new PuzzelPiece(img4, audio4, 1, 1);
   
   // audioOne = new AudioPiece(audio1);
 }
@@ -31,12 +42,18 @@ function draw() {
   // console.log("draw!!!");
   background(200, 200, 200);
   piece1.run();
+  piece2.run();
+  piece3.run();
+  piece4.run();
 }
 
 // Image class
 function PuzzelPiece(img, audio, coordX, coordY) {
   this.img = img;
   this.audio = audio;
+
+  this.coordX = coordX;
+  this.coordY = coordY;
 
   this.width = imgWidth;
   this.height = imgHeight;
@@ -49,7 +66,7 @@ function PuzzelPiece(img, audio, coordX, coordY) {
 
 
   this.run = function () {
-    console.log("run!!!");
+    // console.log("run!!!");
     this.update();
     this.checkHovered();
     // this.borders();
@@ -73,6 +90,7 @@ function PuzzelPiece(img, audio, coordX, coordY) {
   this.moveHome = function () {
     this.position.x = this.coordX * 0.5 * windowWidth;
     this.position.y = this.coordY * 0.5 * windowHeight;
+    this.velocity = createVector(0, 0);
   }
 
   this.display = function() {
@@ -81,12 +99,17 @@ function PuzzelPiece(img, audio, coordX, coordY) {
 };
 
 function mouseClicked () {
-  // console.log(0.5*windowWidth);
-  // console.log(0.5*windowHeight);
-  console.log("mouseClicked!!!");
   if (piece1.hovered) {
-    console.log("hovered!!!");
     piece1.moveHome();
+  };
+  if (piece2.hovered) {
+    piece2.moveHome();
+  };
+  if (piece3.hovered) {
+    piece3.moveHome();
+  };
+  if (piece4.hovered) {
+    piece4.moveHome();
   };
 }
 
