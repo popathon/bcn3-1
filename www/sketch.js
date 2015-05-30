@@ -9,6 +9,11 @@ var img;
 var imgWidth;
 var imgHeight;
 
+var piece1;
+var piece2;
+var piece3;
+var piece4;
+
 function preload() {
   // img1 = loadImage("img/foto-1.jpg");
   img1 = loadImage("img/FOTO_A1_sized.jpg");
