@@ -99,8 +99,14 @@ function PuzzelPiece(img, drawing, audio, coordX, coordY) {
     this.position.x = this.coordX * 0.5 * windowWidth;
     this.position.y = this.coordY * 0.5 * windowHeight;
     this.velocity = createVector(0, 0);
-    this.audio.play();
+    
     this.isHome = true;
+
+    piece1.audio.pause();
+    piece2.audio.pause();
+    piece3.audio.pause();
+    piece4.audio.pause();
+    this.audio.play();
   }
 
   this.display = function() {
@@ -127,11 +133,16 @@ function mouseClicked () {
   };
   if (piece1.isHome && piece2.isHome && piece3.isHome && piece4.isHome) {
     console.log("allhome!!!");
-    piece1.changePic();
-    piece2.changePic();
-    piece3.changePic();
-    piece4.changePic();
+    setTimeout(changePics, 3000);
   };
+}
+
+function changePics () {
+  console.log("changePics!!!");
+  piece1.changePic();
+  piece2.changePic();
+  piece3.changePic();
+  piece4.changePic();
 }
 
 function windowResized() {
