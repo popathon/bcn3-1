@@ -16,10 +16,15 @@ function preload() {
   img3 = loadImage("img/FOTO_B1_sized.jpg");
   img4 = loadImage("img/FOTO_B2_sized.jpg");
   
-  audio1 = loadSound("audio/audio-1.mp3");
-  audio2 = loadSound("audio/audio-1.mp3");
-  audio3 = loadSound("audio/audio-1.mp3");
-  audio4 = loadSound("audio/audio-1.mp3");
+  drawing1 = loadImage("img/painting_A1_sized.png");
+  drawing2 = loadImage("img/painting_A2_sized.png");
+  drawing3 = loadImage("img/painting_B1_sized.png");
+  drawing4 = loadImage("img/painting_B2_sized.png");
+
+  audio1 = loadSound("audio/audio-a1.mp3");
+  audio2 = loadSound("audio/audio-a2.mp3");
+  audio3 = loadSound("audio/audio-b1.mp3");
+  audio4 = loadSound("audio/audio-b2.mp3");
 }
 
 function setup() {
@@ -30,10 +35,10 @@ function setup() {
   imgHeight = 0.5 * windowHeight;
   
   // Create objects
-  piece1 = new PuzzelPiece(img1, audio1, 0, 0);
-  piece2 = new PuzzelPiece(img2, audio2, 1, 0);
-  piece3 = new PuzzelPiece(img3, audio3, 0, 1);
-  piece4 = new PuzzelPiece(img4, audio4, 1, 1);
+  piece1 = new PuzzelPiece(img1, drawing1, audio1, 0, 0);
+  piece2 = new PuzzelPiece(img2, drawing2, audio2, 1, 0);
+  piece3 = new PuzzelPiece(img3, drawing3, audio3, 0, 1);
+  piece4 = new PuzzelPiece(img4, drawing4, audio4, 1, 1);
   
   // audioOne = new AudioPiece(audio1);
 }
@@ -48,8 +53,10 @@ function draw() {
 }
 
 // Image class
-function PuzzelPiece(img, audio, coordX, coordY) {
+function PuzzelPiece(img, drawing, audio, coordX, coordY) {
   this.img = img;
+  this.drawing = drawing;
+  this.displayImage = this.drawing
   this.audio = audio;
 
   this.coordX = coordX;
@@ -59,6 +66,7 @@ function PuzzelPiece(img, audio, coordX, coordY) {
   this.height = imgHeight;
 
   this.hovered = false;
+  this.isHome = false;
 
   this.acceleration = createVector(0, 0);
   this.velocity = createVector(random(-1, 1), random(-1, 1));
@@ -91,10 +99,16 @@ function PuzzelPiece(img, audio, coordX, coordY) {
     this.position.x = this.coordX * 0.5 * windowWidth;
     this.position.y = this.coordY * 0.5 * windowHeight;
     this.velocity = createVector(0, 0);
+    this.audio.play();
+    this.isHome = true;
   }
 
   this.display = function() {
-    image(this.img, this.position.x, this.position.y, this.width, this.height);
+    image(this.displayImage, this.position.x, this.position.y, this.width, this.height);
+  }
+
+  this.changePic = function () {
+    this.displayImage = this.img;
   }
 };
 
@@ -110,6 +124,13 @@ function mouseClicked () {
   };
   if (piece4.hovered) {
     piece4.moveHome();
+  };
+  if (piece1.isHome && piece2.isHome && piece3.isHome && piece4.isHome) {
+    console.log("allhome!!!");
+    piece1.changePic();
+    piece2.changePic();
+    piece3.changePic();
+    piece4.changePic();
   };
 }
 
