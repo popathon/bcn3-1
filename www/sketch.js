@@ -74,7 +74,7 @@ function PuzzelPiece(img, drawing, audio, coordX, coordY) {
   this.isHome = false;
 
   this.acceleration = createVector(0, 0);
-  this.velocity = createVector(random(-0.3, 0.3), random(-0.3, 0.3));
+  this.velocity = createVector(random(-1, 1), random(-1, 1));
   this.position = createVector(random(100, windowWidth-this.width-100), random(100, windowHeight-this.height-100));
 
 
@@ -82,7 +82,7 @@ function PuzzelPiece(img, drawing, audio, coordX, coordY) {
     // console.log("run!!!");
     this.update();
     this.checkHovered();
-    // this.borders();
+    this.borders();
     this.display();
   }
 
@@ -121,6 +121,15 @@ function PuzzelPiece(img, drawing, audio, coordX, coordY) {
 
   this.changePic = function () {
     this.displayImage = this.img;
+  }
+
+  this.borders = function () {
+    if (this.position.x < 0 || this.position.x > windowWidth - this.width) {
+      this.velocity.x = this.velocity.x * -1;
+    };
+    if (this.position.y < 0 || this.position.y > windowHeight - this.height) {
+      this.velocity.y = this.velocity.y * -1;
+    };
   }
 };
 
