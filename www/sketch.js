@@ -11,6 +11,7 @@ var imgHeight;
 
 function preload() {
   img1 = loadImage("img/foto-1.jpg");
+  audio1 = loadSound("audio/audio-1.mp3");
 }
 
 function setup() {
@@ -21,43 +22,73 @@ function setup() {
   imgHeight = 208;
   
   // Create objects
-  imageOne = new ImagePiece(img1);
-  imageTwo = new ImagePiece(img1);
-  imageThree = new ImagePiece(img1);
-
+  piece1 = new PuzzelPiece(img1, audio1, 0, 0);
+  
   // audioOne = new AudioPiece(audio1);
 }
 
 function draw() {
-  background(50, 89, 100);
-  imageOne.move();
-  imageOne.display();
-
-  imageTwo.move();
-  imageTwo.display();
-
-  imageThree.move();
-  imageThree.display();
+  // console.log("draw!!!");
+  background(200, 200, 200);
+  piece1.run();
 }
 
 // Image class
-function ImagePiece(thisImage) {
-  this.x = random(width);
-  this.y = random(height);
+function PuzzelPiece(img, audio, coordX, coordY) {
+  this.img = img;
+  this.audio = audio;
+
   this.width = imgWidth;
   this.height = imgHeight;
 
-  this.speed = 1;
+  this.hovered = false;
 
-  this.move = function() {
-    this.x += random(-this.speed, this.speed);
-    this.y += random(-this.speed, this.speed);
-  };
+  this.acceleration = createVector(0, 0);
+  this.velocity = createVector(random(-1, 1), random(-1, 1));
+  this.position = createVector(random(0, windowWidth), random(0, windowHeight));
+
+
+  this.run = function () {
+    console.log("run!!!");
+    this.update();
+    this.checkHovered();
+    // this.borders();
+    this.display();
+  }
+
+  this.update = function () {
+    // console.log("update!!!");
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+  }
+
+  this.checkHovered = function () {
+    if (mouseX >= this.position.x && mouseX < (this.position.x + this.width) && mouseY >= this.position.y && mouseY < (this.position.y + this.height)) {
+      this.hovered = true;
+    } else {
+      this.hovered = false;
+    }
+  }
+
+  this.moveHome = function () {
+    this.position.x = this.coordX * 0.5 * windowWidth;
+    this.position.y = this.coordY * 0.5 * windowHeight;
+  }
 
   this.display = function() {
-    image(thisImage, this.x, this.y, this.width, this.height);
+    image(this.img, this.position.x, this.position.y, this.width, this.height);
   }
 };
+
+function mouseClicked () {
+  // console.log(0.5*windowWidth);
+  // console.log(0.5*windowHeight);
+  console.log("mouseClicked!!!");
+  if (piece1.hovered) {
+    console.log("hovered!!!");
+    piece1.moveHome();
+  };
+}
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
